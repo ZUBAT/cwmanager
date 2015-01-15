@@ -68,4 +68,4 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 }
 
 Kick(iClient) KickClient(iClient, "Вы не зарегестрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
-Kick1(iClient) KickClient(iClient, "Ваша команда не зарегестрированна на матч");
+//Kick1(iClient) KickClient(iClient, "Ваша команда не зарегестрированна на матч");
