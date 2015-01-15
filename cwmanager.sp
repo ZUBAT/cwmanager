@@ -8,7 +8,7 @@ public Plugin:myinfo =
 {
 	name = "[CW Manager]",
 	author = "ZUBAT",
-	version = "2.0",
+	version = "2.0.1",
 	url = "podval.pro"
 };
 
@@ -28,7 +28,7 @@ public OnClientPostAdminCheck(iClient)
 	{	new iServer = GetConVarInt(sm_server_number);
 		decl String:szQuery[150];
 		GetClientAuthString(iClient, szSteamId[iClient], 32);
-		FormatEx(szQuery, 150, "SELECT *  FROM `all` WHERE `steamid` = '%s' AND `server` = %i OR  `steamid` = '%s' AND `teamid` = -1", szSteamId[iClient], iServer, szSteamId[iClient]);
+		FormatEx(szQuery, 150, "SELECT *  FROM `all` WHERE `steamid` LIKE %'%s'% AND `server` = %i OR  `steamid` LIKE  %'%s'% AND `teamid` = -1", szSteamId[iClient], iServer, szSteamId[iClient]);
 		SQL_TQuery(bd, SQL_SelectPlayerCallback, szQuery, iClient);
 	}
 }
