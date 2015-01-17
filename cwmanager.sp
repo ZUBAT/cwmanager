@@ -9,7 +9,7 @@ public Plugin:myinfo =
 {
 	name = "[CW Manager]",
 	author = "ZUBAT",
-	version = "2.5.3-dev",
+	version = "2.5.5",
 	url = "podval.pro"
 };
 
@@ -23,8 +23,9 @@ public OnPluginStart()
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
 }
 
-//public OnClientPostAdminCheck(iClient)  //old work
-public OnClientPutInServer(iClient)
+ //old work
+//public OnClientPutInServer(iClient)
+public OnClientPostAdminCheck(iClient) 
 {
 	if(!IsFakeClient(iClient))
 	{	new iServer = GetConVarInt(sm_server_number);
@@ -87,5 +88,5 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 	}
 }
 
-Kick(iClient) KickClient(iClient, "Вы не зарегестрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
+Kick(iClient) KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
 //Kick1(iClient) KickClient(iClient, "Ваша команда не зарегестрированна на матч");
