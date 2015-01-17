@@ -1,0 +1,18 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"2.5.5"
+		}
+		
+		"Notes"	"More info @ www.podval.pro"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/cwmanager.smx"
+		"Source"	"Path_SM/scripting/cwmanager.sp"
+	}
+}
