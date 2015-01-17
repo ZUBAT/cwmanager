@@ -9,7 +9,7 @@ public Plugin:myinfo =
 {
 	name = "[CW Manager]",
 	author = "ZUBAT",
-	version = "2.5.1-dev",
+	version = "2.5.3-dev",
 	url = "podval.pro"
 };
 
@@ -23,8 +23,8 @@ public OnPluginStart()
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
 }
 
-//public OnClientPostAdminCheck(iClient)
-public OnClientConnected(iClient)
+//public OnClientPostAdminCheck(iClient)  //old work
+public OnClientPutInServer(iClient)
 {
 	if(!IsFakeClient(iClient))
 	{	new iServer = GetConVarInt(sm_server_number);
