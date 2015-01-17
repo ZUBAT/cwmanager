@@ -2,14 +2,18 @@ new Handle:bd = INVALID_HANDLE;
 new String:szSteamId[MAXPLAYERS+1][32];
 new String:szUserId[32];
 new Handle:sm_server_number = INVALID_HANDLE;
+#undef REQUIRE_PLUGIN
+#include <updater>
 
+#define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
+#define VER "2.5.7"
 #pragma semicolon 1
 
 public Plugin:myinfo =
 {
 	name = "[CW Manager]",
 	author = "ZUBAT",
-	version = "2.5.5",
+	version = VER,
 	url = "podval.pro"
 };
 
@@ -17,12 +21,22 @@ public OnPluginStart()
 {
 	sm_server_number = CreateConVar("sm_server_number", "1", "Number CW SERVER");
 	AutoExecConfig(true, "plugin_cwmanager");
-	PrintToChatAll("[CW Manager] Loaded! version 2.5.5 By ZUBAT");
+	PrintToChatAll("[CW Manager] Loaded! version %i By ZUBAT", VER);
 	decl String:szError[255];
 	bd = SQL_Connect("cwmanager", false, szError, 255);
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
+	if (LibraryExists("updater"))
+    {
+        Updater_AddPlugin(UPDATE_URL);
+    }
 }
-
+public OnLibraryAdded(const String:name[])
+{
+    if (StrEqual(name, "updater"))
+    {
+        Updater_AddPlugin(UPDATE_URL);
+    }
+}
  //old work
 //public OnClientPutInServer(iClient)
 public OnClientPostAdminCheck(iClient) 
@@ -88,5 +102,8 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 	}
 }
 
-Kick(iClient) KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
-//Kick1(iClient) KickClient(iClient, "Ваша команда не зарегестрированна на матч");
+	Kick(iClient) 
+	{
+		DisplayAskConnectBox(iClient, 0, "109.194.19.10");
+		KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
+	}
