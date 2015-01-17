@@ -6,7 +6,7 @@ new Handle:sm_server_number = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.5.7"
+#define VER "2.5.8"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -104,6 +104,5 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 
 	Kick(iClient) 
 	{
-		DisplayAskConnectBox(iClient, 0, "109.194.19.10");
 		KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
 	}
