@@ -1,5 +1,6 @@
 new Handle:bd = INVALID_HANDLE;
 new String:szSteamId[MAXPLAYERS+1][32];
+new String:szUserId[32];
 new Handle:sm_server_number = INVALID_HANDLE;
 
 #pragma semicolon 1
@@ -8,7 +9,7 @@ public Plugin:myinfo =
 {
 	name = "[CW Manager]",
 	author = "ZUBAT",
-	version = "2.0.1",
+	version = "2.5",
 	url = "podval.pro"
 };
 
@@ -28,7 +29,16 @@ public OnClientPostAdminCheck(iClient)
 	{	new iServer = GetConVarInt(sm_server_number);
 		decl String:szQuery[150];
 		GetClientAuthString(iClient, szSteamId[iClient], 32);
-		FormatEx(szQuery, 150, "SELECT *  FROM `all` WHERE `steamid` LIKE %'%s'% AND `server` = %i OR  `steamid` LIKE  %'%s'% AND `teamid` = -1", szSteamId[iClient], iServer, szSteamId[iClient]);
+		decl String:buf[4][10], nuM;
+		if ((nuM = ExplodeString(szSteamId[iClient], ":", buf, 4, 10)) > 1) 
+		{ 
+			for (new i = 2; i < nuM; i++) 
+			{ 
+				TrimString(buf[i]); 
+				szUserId=buf[i]; 
+			} 
+		}
+		FormatEx(szQuery, 150, "SELECT *  FROM `all` WHERE `stid` = '%s' AND `server` = %i OR  `stid` = '%s' AND `teamid` = -1", szUserId, iServer, szUserId);
 		SQL_TQuery(bd, SQL_SelectPlayerCallback, szQuery, iClient);
 	}
 }
@@ -43,13 +53,22 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 			if(SQL_HasResultSet(hndl) && SQL_FetchRow(hndl))
 			{
 				new iServer = GetConVarInt(sm_server_number);
-				decl String:query[512]; 			
-				FormatEx(query, 512, "SELECT *  FROM `all` WHERE `steamid` = '%s' AND `server` = %i OR  `steamid` = '%s' AND `teamid` = -1", szSteamId[iClient], iServer, szSteamId[iClient]);
+				decl String:query[512]; 	
+				decl String:buf[4][10], nuM; 
+				if ((nuM = ExplodeString(szSteamId[iClient], ":", buf, 4, 10)) > 1) 
+				{ 
+			  	   for (new i = 2; i < nuM; i++) 
+				   { 
+					   TrimString(buf[i]); 
+					   szUserId=buf[i]; 
+				   } 
+				} 
+				FormatEx(query, 512, "SELECT *  FROM `all` WHERE `stid` = '%s' AND `server` = %i OR  `stid` = '%s' AND `teamid` = -1", szUserId, iServer, szUserId);
 				new Handle:hquery = SQL_Query(bd, szSteamId[iClient]);    
 				if (hquery != INVALID_HANDLE && SQL_FetchRow(hquery)) if(!SQL_FetchInt(hquery, 0)) Kick(iClient);
 				decl String:nick[64]; 
 				SQL_FetchString(hndl, 1, nick, sizeof(nick));
-				new teamid = SQL_FetchInt(hndl, 3); 
+				new teamid = SQL_FetchInt(hndl, 5); 
 				if (teamid==-1)
 				{
 				PrintToChatAll("[CW Manager] Администратор %s подключился!", nick);
