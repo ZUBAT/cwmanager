@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"2.6.5"
+			"Latest"	"2.6.6"
 		}
 		
 		"Notes"	"More info @ www.podval.pro"

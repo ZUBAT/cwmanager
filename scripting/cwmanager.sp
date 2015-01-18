@@ -6,7 +6,7 @@ new Handle:sm_server_number = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.6.5"
+#define VER "2.6.6"
 #pragma semicolon 1
 
 public Plugin:myinfo =
