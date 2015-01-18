@@ -6,7 +6,7 @@ new Handle:sm_server_number = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.6.6"
+#define VER "2.6.7"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -21,7 +21,7 @@ public OnPluginStart()
 {
 	sm_server_number = CreateConVar("sm_server_number", "1", "Number CW SERVER");
 	AutoExecConfig(true, "plugin_cwmanager");
-	PrintToChatAll("[CW Manager] Loaded! version %i By ZUBAT", VER);
+	PrintToChatAll("[CW Manager] Loaded! version %s By ZUBAT", VER);
 	decl String:szError[255];
 	bd = SQL_Connect("cwmanager", false, szError, 255);
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
