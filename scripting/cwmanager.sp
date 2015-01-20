@@ -1,12 +1,13 @@
 new Handle:bd = INVALID_HANDLE;
 new String:szSteamId[MAXPLAYERS+1][32];
 new String:szUserId[32];
-new Handle:sm_server_number = INVALID_HANDLE;
+new Handle:sm_cw_sid = INVALID_HANDLE;
+new Handle:sm_cw_url = INVALID_HANDLE;
 #undef REQUIRE_PLUGIN
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.6.7"
+#define VER "2.6.8"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -19,7 +20,8 @@ public Plugin:myinfo =
 
 public OnPluginStart()
 {
-	sm_server_number = CreateConVar("sm_server_number", "1", "Number CW SERVER");
+	sm_cw_sid = CreateConVar("sm_cw_sid", "0", "Number CW SERVER 0-MIX SERVER >=1 CW SERVER ");
+	sm_cw_url = CreateConVar("sm_cw_url", "http://podval.pro", "Web server CW Manager");
 	AutoExecConfig(true, "plugin_cwmanager");
 	PrintToChatAll("[CW Manager] Loaded! version %s By ZUBAT", VER);
 	decl String:szError[255];
@@ -43,7 +45,7 @@ public OnLibraryAdded(const String:name[])
 public OnClientPostAdminCheck(iClient)
 {
 	if(!IsFakeClient(iClient))
-	{	new iServer = GetConVarInt(sm_server_number);
+	{	new iServer = GetConVarInt(sm_cw_sid);
 		decl String:szQuery[150];
 		GetClientAuthString(iClient, szSteamId[iClient], 32);
 		decl String:buf[4][10], nuM;
@@ -69,7 +71,7 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 		{
 			if(SQL_HasResultSet(hndl) && SQL_FetchRow(hndl))
 			{
-				new iServer = GetConVarInt(sm_server_number);
+				new iServer = GetConVarInt(sm_cw_sid);
 				decl String:query[512]; 	
 				decl String:buf[4][10], nuM; 
 				if ((nuM = ExplodeString(szSteamId[iClient], ":", buf, 4, 10)) > 1) 
@@ -104,6 +106,8 @@ public SQL_SelectPlayerCallback(Handle:owner, Handle:hndl, const String:error[],
 }
 
 	Kick(iClient) 
-	{
-		KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь http://podval.pro/ \n Ваш STEAM_ID %s", szSteamId[iClient]);
+	{	
+		decl String:cw_url[255];
+		GetConVarString(sm_cw_url, cw_url, sizeof(cw_url));
+		KickClient(iClient, "Вы не зарегистрированы в системе CW/MIX\nЗарегестрируйтесь %s \n Ваш STEAM_ID %s", cw_url, szSteamId[iClient]);
 	}
