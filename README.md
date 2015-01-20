@@ -10,4 +10,5 @@ clientprefs plugin from SourceMod
 
 Cvars and commands
 ------------------
-sm_server_number - Number of Server on WEB version
+sm_cw_sid - Number of Server on WEB version
+sm_cw_url - Url Web Version registration
