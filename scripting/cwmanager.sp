@@ -7,7 +7,7 @@ new Handle:sm_cw_url = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.6.9"
+#define VER "2.7.0"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -22,6 +22,7 @@ public OnPluginStart()
 {
 	sm_cw_sid = CreateConVar("sm_cw_sid", "0", "Number CW SERVER 0-MIX SERVER >=1 CW SERVER ");
 	sm_cw_url = CreateConVar("sm_cw_url", "http://csgoirk.ru", "Web server CW Manager");
+	sm_cw_url = CreateConVar("sm_cw_version", VER, "Version plugin");
 	AutoExecConfig(true, "plugin_cwmanager");
 	PrintToChatAll("[CW Manager] Loaded! version %s By ZUBAT", VER);
 	decl String:szError[255];

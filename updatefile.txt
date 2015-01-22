@@ -4,10 +4,10 @@
 	{
 		"Version"
 		{
-			"Latest"	"2.6.9"
+			"Latest"	"2.7.0"
 		}
 		
-		"Notes"	"More info @ www.podval.pro"
+		"Notes"	"More info @ www.csgoirk.ru"
 	}
 	
 	"Files"
