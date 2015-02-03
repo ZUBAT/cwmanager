@@ -8,7 +8,7 @@ new Handle:sm_cw_version = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.7.1"
+#define VER "2.7.2"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -26,6 +26,7 @@ public OnPluginStart()
 	sm_cw_version = CreateConVar("sm_cw_version", VER, "Version plugin");
 	AutoExecConfig(true, "plugin_cwmanager");
 	PrintToChatAll("[CW Manager] Loaded! version %s By ZUBAT", VER);
+	// SetConVarInt("sv_damage_print_enable", 0);
 	decl String:szError[255];
 	bd = SQL_Connect("cwmanager", false, szError, 255);
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
@@ -34,13 +35,7 @@ public OnPluginStart()
         Updater_AddPlugin(UPDATE_URL);
     }
 }
-public OnLibraryAdded(const String:name[])
-{
-    if (StrEqual(name, "updater"))
-    {
-        Updater_AddPlugin(UPDATE_URL);
-    }
-}
+
  //old work
 //public OnClientPutInServer(iClient)
 //public OnClientPostAdminCheck(iClient) 
