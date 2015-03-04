@@ -4,7 +4,7 @@
 	{
 		"Version"
 		{
-			"Latest"	"2.7.5"
+			"Latest"	"2.7.8"
 		}
 		
 		"Notes"	"More info @ www.csgoirk.ru"
