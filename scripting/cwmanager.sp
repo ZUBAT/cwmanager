@@ -8,7 +8,7 @@ new Handle:sm_cw_version = INVALID_HANDLE;
 #include <updater>
 
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.7.3"
+#define VER "2.7.5"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -27,6 +27,8 @@ public OnPluginStart()
 	AutoExecConfig(true, "plugin_cwmanager");
 	PrintToChatAll("[CW Manager] Loaded! version %s By ZUBAT", VER);
 	ServerCommand("sv_damage_print_enable 0");
+	ServerCommand("warmup");
+	ServerCommand("motdfile imotd.txt");
 	decl String:szError[255];
 	bd = SQL_Connect("cwmanager", false, szError, 255);
 	if(bd == INVALID_HANDLE) SetFailState("Ошибка подключения к базе данных (%s)", szError);
