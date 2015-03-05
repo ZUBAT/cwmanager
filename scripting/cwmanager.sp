@@ -8,7 +8,7 @@ new Handle:sm_cw_url = INVALID_HANDLE;
 #include <timers>
 #define CHAT_PREFIX   "CW Manager"
 #define UPDATE_URL    "https://raw.githubusercontent.com/ZUBAT/cwmanager/master/updatefile.txt"
-#define VER "2.7.8"
+#define VER "2.7.9"
 #pragma semicolon 1
 
 public Plugin:myinfo =
@@ -27,6 +27,7 @@ public OnPluginStart()
 	RegAdminCmd("cache", Cache, ADMFLAG_CUSTOM1,"change map for mirage");
 	RegAdminCmd("over", Overpass, ADMFLAG_CUSTOM1,"change map for mirage");
 	RegAdminCmd("nuke", Nuke, ADMFLAG_CUSTOM1,"change map for mirage");
+	RegConsoleCmd("cw_version", PrintVersion);
 	sm_cw_sid = CreateConVar("sm_cw_sid", "0", "Number CW SERVER 0-MIX SERVER >=1 CW SERVER ");
 	sm_cw_url = CreateConVar("sm_cw_url", "http://csgoirk.ru", "Web server CW Manager");
 	CreateConVar("sm_cw_version", VER, "Version plugin");
@@ -41,6 +42,12 @@ public OnPluginStart()
     {
         Updater_AddPlugin(UPDATE_URL);
     }
+}
+public Action:PrintVersion(client, args)
+{
+	PrintToServer("%s", VER);
+	
+	
 }
 public Action:Dust2(client, args)
 {
